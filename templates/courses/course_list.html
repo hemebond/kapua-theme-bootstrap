@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "courses" %}{% endblock %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="span10">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Subject</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for course in object_list %}
+					<tr>
+						<td>{{ course.subject }}</td>
+						<td><a href="{{ course.get_absolute_url }}">{{ course.name }}</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="span2">
+			{% if perms.courses.add_course %}
+				<a href="./add/" class="btn"><i class="icon-plus-sign"></i> Add new course</a>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

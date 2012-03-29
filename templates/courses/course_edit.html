@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load courses_tags %}
+{% load theme_tags %}
+
+{% block title %}{% if object.id %}Edit{% else %}Add{% endif %} a course{% endblock %}
+
+{% comment %}
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.mouse.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.sortable.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery/plugins/jquery.cookie.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery/plugins/jquery.ui.nestedSortable.js"></script>
+{% endcomment %}
+
+{% block content %}
+	<h1>{% if object.id %}Edit{% else %}Add{% endif %} a course</h1>
+
+	{% if error_message %}<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>{{ error_message }}</div>{% endif %}
+
+	<form action="." method="POST" class="form-horizontal">
+		{% csrf_token %}
+		{{ form.non_field.errors }}
+
+		<fieldset>
+			<div class="control-group {% if form.name.errors %}error{% endif %}">
+				<label for="{{ form.name.auto_id }}" class="control-label">{{ form.name.label }}</label>
+				<div class="controls">
+					{{ form.name }}
+					<p class="help-block">{{ form.name.help_text }}</p>
+					{% if form.name.errors %}
+					<ul class="help-inline">
+						{% for error in form.name.errors %}
+						<li>{{ error|escape }}</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+			<div class="control-group {% if form.name.errors %}error{% endif %}">
+				<label for="{{ form.short_name.auto_id }}" class="control-label">{{ form.short_name.label }}</label>
+				<div class="controls">
+					{{ form.short_name }}
+					<span class="help-inline">{{ form.short_name.help_text }}</span>
+					{% if form.name.errors %}
+					<ul class="help-block">
+						{% for error in form.short_name.errors %}
+						<li>{{ error|escape }}</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+			<!--
+			<div class="control-group">
+				<label for="{{ form.content.auto_id }}" class="control-label">{{ form.content.label }}</label>
+				<div class="controls">
+					{{ form.content }}
+					{{ form.content.errors }}
+				</div>
+			</div>
+			-->
+			<div class="control-group">
+				<label for="{{ form.subject.auto_id }}" class="control-label">{{ form.subject.label }}</label>
+				<div class="controls">
+					{{ form.subject }}
+					{{ form.subject.errors }}
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="{{ form.instructional_year_level.auto_id }}" class="control-label">{{ form.instructional_year_level.label }}</label>
+				<div class="controls">
+					{{ form.instructional_year_level }}
+					{{ form.instructional_year_level.errors }}
+				</div>
+			</div>
+		</fieldset>
+
+		<div class="form-actions">
+			<input type="submit" value="{% trans 'Save' %}" name="_save" class="submit default wymupdate btn btn-primary">
+			<!--<input type="submit" value="{% trans 'Save and continue editing' %}" name="_continue" class="submit wymupdate">-->
+			<!--<input type="submit" value="{% trans 'Save and add another' %}" name="_addanother" class="submit wymupdate">-->
+		</div>
+	</form>
+
+	{% if object.id %}
+		{% display_moveable_page_list object.id %}
+	{% endif %}
+
+	{% add_js form.media.js %}
+{% endblock %}
