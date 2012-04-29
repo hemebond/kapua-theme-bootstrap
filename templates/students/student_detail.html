@@ -19,6 +19,7 @@
 		{% for p in student.person.related_people.all %}
 			<div class="row-fluid">
 				<div class="thumbnail pull-left">
+					{% if p.photo %}
 						<img src="{{ p.related_person.photo|thumbnail:"64w" }}" alt="{% trans "Photo" %}">
 					{% else %}
 						<img src="{{ STATIC_URL }}missing.png" alt="{% trans "Photo missing" %}" style="width:64px">
