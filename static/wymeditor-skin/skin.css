@@ -1,0 +1,63 @@
+/*HIDDEN BY DEFAULT*/
+.wym_skin_bootstrap .wym_area_left          { display: none; }
+.wym_skin_bootstrap .wym_area_right         { display: block; }
+
+
+/*auto-clear the wym_box*/
+		.wym_skin_bootstrap:after 	        { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+ * html .wym_skin_bootstrap                { height: 1%;}
+
+
+/*WYM_HTML*/
+.wym_skin_bootstrap .wym_html               { width: 98%;}
+.wym_skin_bootstrap .wym_html textarea      { width: 100%; height: 200px; }
+
+
+/*WYM_IFRAME*/
+.wym_skin_bootstrap .wym_iframe             { width: 98%;}
+.wym_skin_bootstrap .wym_iframe iframe      { width: 100%; height: 200px; border: 1px solid #ccc; background: white; border-radius: 3px 3px 3px 3px }
+
+
+/*AREAS*/
+        .wym_skin_bootstrap .wym_area_left          { width: 150px; float: left;}
+        .wym_skin_bootstrap .wym_area_right         { width: 150px; float: right;}
+        .wym_skin_bootstrap .wym_area_bottom        { height: 1%; clear: both;}
+ * html .wym_skin_bootstrap .wym_area_main          { height: 1%;}
+ * html .wym_skin_bootstrap .wym_area_top           { height: 1%;}
+ *+html .wym_skin_bootstrap .wym_area_top           { height: 1%;}
+
+
+.wym_skin_bootstrap .wym_tools .btn			   	{ padding: 2px 6px 0}
+.wym_skin_bootstrap .wym_tools i          	   	{ width: 24px; height: 24px; overflow: hidden; display: inline-block; }
+/*image replacements*/
+.wym_skin_bootstrap .wym_tools i               	{ background: url("icons.png") no-repeat; text-indent: -9999px;} 
+.wym_skin_bootstrap .wym_tools_strong i        	{ background-position: 0 -382px;}
+.wym_skin_bootstrap .wym_tools_emphasis i      	{ background-position: 0 -22px;}
+.wym_skin_bootstrap .wym_tools_superscript i   	{ background-position: 0 -430px;}
+.wym_skin_bootstrap .wym_tools_subscript i     	{ background-position: 0 -454px;}
+.wym_skin_bootstrap .wym_tools_ordered_list i  	{ background-position: 0 -48px;}
+.wym_skin_bootstrap .wym_tools_unordered_list i	{ background-position: 0 -72px;}
+.wym_skin_bootstrap .wym_tools_indent i        	{ background-position: 0 -574px;}
+.wym_skin_bootstrap .wym_tools_outdent i       	{ background-position: 0 -598px;}
+.wym_skin_bootstrap .wym_tools_undo i          	{ background-position: 0 -502px;}
+.wym_skin_bootstrap .wym_tools_redo i          	{ background-position: 0 -526px;}
+.wym_skin_bootstrap .wym_tools_link i          	{ background-position: 0 -96px;}
+.wym_skin_bootstrap .wym_tools_unlink i        	{ background-position: 0 -168px;}
+.wym_skin_bootstrap .wym_tools_image i         	{ background-position: 0 -121px;}
+.wym_skin_bootstrap .wym_tools_table i         	{ background-position: 0 -144px;}
+.wym_skin_bootstrap .wym_tools_paste i         	{ background-position: 0 -552px;}
+.wym_skin_bootstrap .wym_tools_html i          	{ background-position: 0 -193px;}
+.wym_skin_bootstrap .wym_tools_preview i       	{ background-position: 0 -408px;}
+
+/*DIALOGS*/
+        .wym_dialog div.row         { margin-bottom: 5px;}
+        .wym_dialog div.row input   { margin-right: 5px;}
+        .wym_dialog div.row label   { float: left; width: 120px; display: block; text-align: right; margin-right: 10px; }
+        .wym_dialog div.row-indent  { padding-left: 160px; }
+        /*autoclearing*/        
+        .wym_dialog div.row:after            { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+        .wym_dialog div.row                  { display: inline-block; }
+            /* Hides from IE-mac \*/
+            * html .wym_dialog div.row       { height: 1%; }
+            .wym_dialog div.row              { display: block; }
+            /* End hide from IE-mac */                

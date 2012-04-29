@@ -1,16 +1,15 @@
-{% load i18n mptt_tags static %}
-{% get_static_prefix as STATIC_PREFIX %}
+{% load i18n %}
+{% load mptt_tags %}
+{% load static %}
+{% load sekizai_tags %}
 
 <fieldset class="module">
 	<h2>Pages</h2>
-	<ol id="list_{{ root_node.id }}" class="sortable">
-		{% recursetree root_node.get_descendants %}
+	<ol id="list_{{ treenode.id }}" class="sortable">
+		{% recursetree treenode.get_descendants %}
 		<li id="list_{{ node.id }}">
 			<div>
 				{{ node.content_object.name }}
-	            {% if perms.courses.add_page %}
-	                <a href="{% url admin:courses_page_change node.object_id %}" class="changelink">{% trans 'Change' %}</a>
-	            {% endif %}
 			</div>
 			{% if not node.is_leaf_node %}
 				<ol>
@@ -20,17 +19,21 @@
 		</li>
 		{% endrecursetree %}
 	</ol>
-	<div class="add-row">
-		<a href="{% url admin:courses_page_add %}?course={{ course.pk }}">
-			<img alt="" src="{{ STATIC_PREFIX }}admin/img/admin/icon_addlink.gif">
-			Add a new page
-		</a>
-	</div>
 </fieldset>
 
+{% addtoblock "css" %}<link href="{{ STATIC_URL }}page_tree.css" rel="stylesheet" type="text/css">{% endaddtoblock %}
+
+{% addtoblock "js" %}<script src="{{ STATIC_URL }}jquery-ui/jquery-1.7.1.js" type="text/javascript"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.core.js" type="text/javascript"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.widget.js" type="text/javascript"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.mouse.js" type="text/javascript"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.sortable.js" type="text/javascript"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{{ STATIC_URL }}jquery/plugins/jquery.cookie.js" type="text/javascript"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{{ STATIC_URL }}jquery/plugins/jquery.ui.nestedSortable.js" type="text/javascript"></script>{% endaddtoblock %}
+{% addtoblock "js" %}
 <script>
 	var item;
-	$(document).ajaxSend(function(event, xhr, settings) {
+	jQuery(document).ajaxSend(function(event, xhr, settings) {
 	    function sameOrigin(url) {
 	        // url could be relative or scheme relative or absolute
 	        var host = document.location.host; // host + port
@@ -52,8 +55,8 @@
 	    }
 	});
 	
-	$(document).ready(function(){
-		$('ol.sortable').nestedSortable({
+	jQuery(document).ready(function(){
+		jQuery('ol.sortable').nestedSortable({
 			disableNesting: 'no-nest',
 			forcePlaceholderSize: true,
 			handle: 'div',
@@ -104,3 +107,4 @@
 		});
 	});
 </script>
+{% endaddtoblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Students" %}{% endblock %}
+
+{% block content %}
+	<div class="span12">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'kapua_student_list' %}">{% trans "Students" %}</a> <span class="divider">/</span></li>
+        </ul>
+
+        <h1>
+        	{% trans "Students" %}
+			{% if perms.students.add_student %}
+				<a href="./add/" class="btn pull-right"><i class="icon-plus-sign"></i> {% trans "Add" %}</a>
+			{% endif %}
+		</h1>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>{% trans "First Names" %}</th>
+					<th>{% trans "Last Name" %}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for student in object_list %}
+				<tr>
+					<td><a href="{{ student.get_absolute_url }}">{{ student.person.first_name }} {{ student.person.middle_names }}</a></td>
+					<td><a href="{{ student.get_absolute_url }}">{{ student.person.last_name }}</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

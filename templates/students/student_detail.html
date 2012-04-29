@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load auto_thumbnail %}
+
+{% block title %}{{ student }}{% endblock %}
+
+{% block content %}
+	<div class="span4">
+		<!-- photo -->
+		<div class="thumbnail">
+			{% if student.person.photo %}
+				<img src="{{ student.person.photo|thumbnail:"256w" }}" alt="Photo of {{ student.person.first_name }} {{ student.person.last_name }}">
+			{% else %}
+				<img src="{{ STATIC_URL }}missing.png" alt="Photo missing" style="width:256px">
+			{% endif %}
+		</div>
+
+		<!-- related people -->
+		{% for p in student.person.related_people.all %}
+			<div class="row-fluid">
+				<div class="thumbnail pull-left">
+						<img src="{{ p.related_person.photo|thumbnail:"64w" }}" alt="{% trans "Photo" %}">
+					{% else %}
+						<img src="{{ STATIC_URL }}missing.png" alt="{% trans "Photo missing" %}" style="width:64px">
+					{% endif %}
+				</div>
+				<dl>
+					<dt><a href="{{ p.related_person.get_absolute_url }}">{{ p.related_person }}</a></dt>
+					<dd>{{ p.relationship_type.description }}</dd>
+				</dl>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="span8">
+		<div class="page-header">	
+			<h1>{{ student.person }}
+				{% if perms.people.change_person %}
+					<a href="edit/" class="btn" style="float:right"><i class="icon-edit"></i> {% trans "Edit" %}</a>
+				{% endif %}
+			</h1>
+		</div>
+
+		<!-- location -->
+		<dl class="dl-horizontal">
+			{% if student.person.email %}
+				<dt>{% trans 'Email' %}</dt>
+				<dd><a href="mailto:{{ person.email }}">{{ student.person.email }}</a></dd>
+			{% endif %}
+
+			{% if student.person.phone %}
+				<dt>{% trans 'Phone' %}</dt>
+				<dd>{{ student.person.phone }}</dd>
+			{% endif %}
+
+			{% if student.person.residence.phone %}
+				<dt>{% trans 'Home' %}</dt>
+				<dd>{{ student.person.residence.phone }}</dd>
+			{% endif %}
+
+			<!-- gender -->
+			<dt>{% trans "Gender" %}</dt>
+			<dd>{{ student.person.get_gender_display }}</dd>
+
+			<!-- birthday -->
+			<dt>{% trans "Date of birth" %}</dt>
+			<dd>{{ student.person.birth_date }}</dd>
+
+			<!-- ethnicity -->
+			{% with ethnicity_list=student.person.ethnicity.all %}
+				{% if ethnicity_list %}
+					<dt>{% trans "Ethnicity" %}</dt>
+					{% for ethnicity in ethnicity_list %}
+						<dd>{{ ethnicity }}</dd>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+
+			<!-- iwi -->
+			{% with iwi_list=student.person.iwi.all %}
+				{% if iwi_list %}
+					<dt>{% trans "Iwi" %}</dt>
+					{% for iwi in iwi_list %}
+						<dd>{{ iwi }}</dd>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+
+			<!-- citizenship -->
+			<dt>{% trans "Citizenship" %}</dt>
+			<dd>{{ student.person.citizenship }}</dd>
+		</dl>
+
+		<dl class="dl-horizontal">
+			<dt>Ministry ID</dt>
+			<dd>{{ student.ministry_id }}</dd>
+			<dt>ORS</dt>
+			<dd>{{ student.get_ors_display }}</dd>
+			<dt>{% trans "Funding Year Level" %}</dt>
+			<dd>{{ student.funding_year_level }}</dd>
+			<dt>{% trans "Student Type" %}</dt>
+			<dd>{{ student.student_type }}</dd>
+			<dt>{% trans "Zoning Status" %}</dt>
+			<dd>{{ student.zoning_status }}</dd>
+			<dt>{% trans "Tuition Fee" %}</dt>
+			<dd>{{ student.tuition_fee }}</dd>
+			<dt>{% trans "Exchange Scheme" %}</dt>
+			<dd>{{ student.exchange_scheme }}</dd>
+			<dt>{% trans "Boarding Status" %}</dt>
+			<dd>{{ student.boarding_status }}</dd>
+			<dt>{% trans "Eligibility Criteria" %}</dt>
+			<dd>{{ student.eligibility_criteria }}</dd>
+			<dt>{% trans "Year Level" %}</dt>
+			<dd>{{ student.year_level }}</dd>
+		</dl>
+	</div>
+{% endblock %}

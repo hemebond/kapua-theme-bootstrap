@@ -1,30 +1,54 @@
 {% extends "base.html" %}
 {% load mptt_tags %}
 {% load i18n %}
+{% load theme_tags %}
 
-{% block title %}{{ object.name }}{% endblock %}
+{% block title %}{{ course.name }}{% endblock %}
 
 {% block head_extras %}
 <style>
-ol.table_of_contents,
-ol.table_of_contents ol { counter-reset: item }
-ol.table_of_contents li { display: block }
-ol.table_of_contents li:before { content: counters(item, ".") " "; counter-increment: item }
+    ol.table_of_contents,
+    ol.table_of_contents ol { counter-reset: item }
+    ol.table_of_contents li { display: block }
+    ol.table_of_contents li:before { content: counters(item, ".") " "; counter-increment: item }
 </style>
 {% endblock %}
 
 {% block content %}
 	<div class="span10">
-		<h1>{{ object.name }}</h1>
+        <ul class="breadcrumb">
+            <li><a href="{% url 'kapua_course_list' %}">{% trans "Courses" %}</a> <span class="divider">/</span></li>
+            <li class="active">{{ course.name }}</li>
+        </ul>
 
-		{{ object.content|safe }}
 
-		<h2>Contents</h2>
-{% comment %}
+		<h1>
+			{{ course.name }}
+	        {% if perms.courses.change_course %}
+	            <a href="edit/" class="btn" style="float:right">
+	                <i class="icon-edit"></i>
+	                {% trans "Edit Course" %}
+	            </a>
+	        {% endif %}
+	    </h1>
+
+		{{ course.content|clean|safe }}
+
+		<h2>
+			Contents
+			{% if perms.courses.add_page %}
+				<a href="add/" class="btn" style="float:right">
+				    <i class="icon-plus-sign"></i>
+				    {% trans "Add Page" %}
+				 </a>
+			{% endif %}
+		</h2>
 		<ol class="table_of_contents">
 			{% recursetree treenode.get_descendants %}
 			<li>
-				<a href="{{ node.content_object.get_absolute_url }}">{{ node.content_object.name }}</a>
+				<a href="{{ node.content_object.get_absolute_url }}">
+				    {{ node.content_object.name }}
+				</a>
 				{% if not node.is_leaf_node %}
 					<ol>
 						{{ children }}
@@ -33,22 +57,26 @@ ol.table_of_contents li:before { content: counters(item, ".") " "; counter-incre
 			</li>
 			{% endrecursetree %}
 		</ol>
-{% endcomment %}
 	</div>
 
-	<div class="span2">
-		{% if perms.courses.add_page %}
-			<a href="./add/" class="btn"><i class="icon-plus-sign"></i> Add new page</a>
-		{% endif %}
 
+	<div class="span2">
 		{% if prev %}
 			<h6>Previous</h6>
-			<p><a href="{{ prev.content_object.get_absolute_url }}">{{ prev.content_object.name }}</a></p>
+			<p>
+                <a href="{{ prev.content_object.get_absolute_url }}">
+                    {{ prev.content_object.name }}
+                </a>
+			</p>
 		{% endif %}
 
 		{% if next %}
 			<h6>Next</h6>
-			<p><a href="{{ next.content_object.get_absolute_url }}">{{ next.content_object.name }}</a></p>
+			<p>
+			    <a href="{{ next.content_object.get_absolute_url }}">
+			        {{ next.content_object.name }}
+		        </a>
+	        </p>
 		{% endif %}
 	</div>
 {% endblock %}

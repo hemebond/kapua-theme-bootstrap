@@ -1,41 +1,39 @@
 {% extends "base.html" %}
 {% load mptt_tags %}
 {% load i18n %}
+{% load theme_tags %}
 
 {% block title %}{{ object.title }}{% endblock %}
 
-{% block sidebar %}
-	<h6>Tools</h6>
-	{% if perms.courses.change_page %}
-		<ul>
-			<li><a href="./edit/">Edit page</a></li>
-		</ul>
-	{% endif %}
-
-	{% if prev %}
-		<h6>Previous</h6>
-		<p><a href="{{ prev.content_object.get_absolute_url }}">{{ prev.content_object.name }}</a></p>
-	{% endif %}
-	
-	{% if next %}
-		<h6>Next</h6>
-		<p><a href="{{ next.content_object.get_absolute_url }}">{{ next.content_object.name }}</a></p>
-	{% endif %}
-{% endblock %}
-
 {% block content %}
-	<ol id="breadcrumbs">
-		{% for node in object.get_ancestors %}
-		<li><a href="{{ node.content_object.get_absolute_url }}">{{ node.content_object.name }}</a> »</li>
-		{% endfor %}
-	</ol>
-	
-	<h1>{{ object.content_object.name }}</h1>
+    <div class="span10">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'kapua_course_list' %}">{% trans "Courses" %}</a> <span class="divider">/</span></li>
+            {% for node in treenode.get_ancestors %}
+            <li><a href="{{ node.content_object.get_absolute_url }}">{{ node.content_object.name }}</a> <span class="divider">/</span></li>
+            {% endfor %}
+            <li class="active">{{ object.name }}</li>
+        </ul>
+        
+        <h1>{{ object.name }}
+            {% if perms.courses.change_page %}
+                <a href="./edit/" class="btn" style="float:right"><i class="icon-edit"></i> {% trans "Edit Page" %}</a>
+            {% endif %}
+        </h1>
+    
+        {{ object.content|clean|safe }}
+    </div>
 
-	{{ object.content_object.content|safe }}
-{% comment %}	
-	{% if next %}
-		<a href="{{ next.get_absolute_url }}">{{ next.name }}</a>
-	{% endif %}
-{% endcomment %}
+    <div class="span2">
+
+    	{% if prev %}
+    		<h6>Previous</h6>
+    		<p><a href="{{ prev.content_object.get_absolute_url }}">{{ prev.content_object.name }}</a></p>
+    	{% endif %}
+    	
+    	{% if next %}
+    		<h6>Next</h6>
+    		<p><a href="{{ next.content_object.get_absolute_url }}">{{ next.content_object.name }}</a></p>
+    	{% endif %}
+    </div>
 {% endblock %}

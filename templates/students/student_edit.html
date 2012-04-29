@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block title %}{% if object.id %}Edit a{% else %}Add a new{% endif %} {% trans "Student" %}{% endblock %}
+
+
+{% block content %}
+	{% if error_message %}<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>{{ error_message }}</div>{% endif %}
+
+
+	<h2>{% if object.id %}Edit a{% else %}Add a new{% endif %} Student</h2>
+
+	<form action="" method="POST" class="form-horizontal">
+		{% csrf_token %}
+		{{ form.non_field.errors }}
+
+		<fieldset>
+			<legend>{% trans "Personal Details" %}</legend>
+			{% for field in person_form %}
+				{% include "form_field.html" %}
+			{% endfor %}
+		</fieldset>
+
+		<fieldset>
+			<legend>{% trans "Student Details" %}</legend>
+			{% for field in student_form %}
+				{% include "form_field.html" %}
+			{% endfor %}
+		</fieldset>
+
+		<div class="form-actions">
+			<input type="submit" value="{% trans "Save" %}" name="_save" class="default btn btn-primary">
+		</div>
+	</form>
+{% endblock %}

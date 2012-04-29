@@ -3,23 +3,18 @@
 {% load i18n %}
 {% load theme_tags %}
 
-{% block title %}Editing {{ form.name.value }}{% endblock %}
 
-{% block head_extras %}{{ form.media.css }}{% endblock %}
-
-{% block sidebar %}
-	{% if object.id %}
-		{% get_attachments_for object as "attachments" %}
-		{% if attachments %}
-			<ul id="file_attachments">
-				{% for att in attachments %}
-					<img src="{{ att.attachment_file.url }}"> {{ att.name }} {% attachment_delete_form att %}
-				{% endfor %}
-			</ul>
-		{% endif %}
-		{% attachment_form object %}
+{% block title %}
+	{% if page.id %}
+		{% trans "Editing" %} {{ page.name }}
+	{% else %}
+		{% trans "Adding a new page"%}
 	{% endif %}
 {% endblock %}
+
+
+{% block head_extras %}{% endblock %}
+
 
 {% block content %}
 	{% if error_message %}<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>{{ error_message }}</div>{% endif %}
@@ -29,29 +24,25 @@
 		{{ form.non_field.errors }}
 
 		<fieldset>
-			{% include "form_fields.html" with field=form.name %}
+			<legend>
+				{% if page.id %}
+					{% trans "Editing" %} <q>{{ page.name }}</q>
+				{% else %}
+					{% trans "Adding a new page"%}
+				{% endif %}
+			</legend>
+			{% include "form_field.html" with field=form.name %}
+			{% include "wymeditor.html" with field=form.content %}
+		</fieldset>
 
-			<div class="control-group {% if form.content.errors %}error{% endif %}">
-				<label for="{{ form.content.auto_id }}" class="control-label">{{ form.content.label }}</label>
-				<div class="controls">
-					<textarea id="id_page-content" rows="10" cols="40" name="page-content" class="wymeditor"></textarea>
-					<p class="help-block">{{ form.content.help_text }}</p>
-					{% if form.content.errors %}
-						<ul class="help-inline">
-							{% for error in form.content.errors %}
-								<li>{{ error|escape }}</li>
-							{% endfor %}
-						</ul>
-					{% endif %}
-				</div>
-			</div>
-
+		<fieldset>
+			<legend>{% trans "Insert page" %}</legend>
+			{% include "form_field.html" with field=form.position %}
+			{% include "form_field.html" with field=form.target %}
 		</fieldset>
 
 		<div class="form-actions">
-			<input type="submit" value="{% trans 'Save' %}" name="_save" class="submit default btn btn-primary">
+			<input type="submit" value="{% trans 'Save' %}" name="_save" class="submit default wymupdate btn btn-primary">
 		</div>
 	</form>
-	
-	{% include "wymeditor.html" %}
 {% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load auto_thumbnail %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+	<div class="span4">
+		<!-- photo -->
+		<div class="thumbnail">
+			{% if object.photo %}
+				<img src="{{ object.photo|thumbnail:"256w" }}" alt="Photo of {{ object.first_name }} {{ object.last_name }}">
+			{% else %}
+				<img src="{{ STATIC_URL }}missing.png" alt="Photo missing" style="width:256px">
+			{% endif %}
+		</div>
+
+		<!-- related people -->
+		{% for p in object.related_people.all %}
+			<div class="row-fluid">
+				<div class="thumbnail pull-left">
+					{% if p.related_person.photo %}
+						<img src="{{ p.related_person.photo|thumbnail:"64w" }}" alt="{% trans "Photo" %}">
+					{% else %}
+						<img src="{{ STATIC_URL }}missing.png" alt="{% trans "Photo missing" %}" style="width:64px">
+					{% endif %}
+				</div>
+				<dl>
+					<dt><a href="{{ p.related_person.get_absolute_url }}">{{ p.related_person }}</a></dt>
+					<dd>{{ p.relationship_type.description }}</dd>
+				</dl>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="span8">
+		<div class="page-header">	
+			<h1>{{ object }}
+				{% if perms.people.change_person %}
+					<a href="edit/" class="btn" style="float:right"><i class="icon-edit"></i> {% trans "Edit" %}</a>
+				{% endif %}
+			</h1>
+		</div>
+
+		<!-- location -->
+		<dl class="dl-horizontal">
+			{% if person.email %}
+				<dt>{% trans 'Email' %}</dt>
+				<dd><a href="mailto:{{ person.email }}">{{ person.email }}</a></dd>
+			{% endif %}
+
+			{% if person.phone %}
+				<dt>{% trans 'Phone' %}</dt>
+				<dd>{{ person.phone }}</dd>
+			{% endif %}
+
+			{% if person.residence.phone %}
+				<dt>{% trans 'Home' %}</dt>
+				<dd>{{ person.residence.phone }}</dd>
+			{% endif %}
+
+			<dt>{% trans "Location" %}</dt>
+			<dd>
+				<address>
+					{{ object.residence.number }} {{ object.residence.street }}<br>
+					{{ object.residence.suburb }}<br>
+					{{ object.residence.city }}<br>
+					{{ object.residence.country }}<br>
+					{{ object.residence.postcode }}
+				</address>
+			</dd>
+
+			<!-- gender -->
+			<dt>{% trans "Gender" %}</dt>
+			<dd>{{ object.get_gender_display }}</dd>
+
+			<!-- birthday -->
+			<dt>{% trans "Date of birth" %}</dt>
+			<dd>{{ object.birth_date }}</dd>
+
+			<!-- ethnicity -->
+			{% with ethnicity_list=object.ethnicity.all %}
+				{% if ethnicity_list %}
+					<dt>{% trans "Ethnicity" %}</dt>
+					{% for ethnicity in ethnicity_list %}
+						<dd>{{ ethnicity }}</dd>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+
+			<!-- iwi -->
+			{% with iwi_list=object.iwi.all %}
+				{% if iwi_list %}
+					<dt>{% trans "Iwi" %}</dt>
+					{% for iwi in iwi_list %}
+						<dd>{{ iwi }}</dd>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+
+			<!-- citizenship -->
+			<dt>{% trans "Citizenship" %}</dt>
+			<dd>{{ object.citizenship }}</dd>
+		</dl>
+
+
+
+
+	</div>
+{% endblock %}
+
+
+
+{% comment %}
+	<div id="personal_details">
+
+
+
+
+
+	</div>
+	
+	{% if person.student %}
+		<hr style="clear:left">
+		{% with student=person.student %}
+			{% include "students/detail.html" %}
+		{% endwith %}
+	{% endif %}
+{% endcomment %}
