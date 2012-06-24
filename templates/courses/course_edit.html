@@ -7,15 +7,6 @@
 
 {% block title %}{% if course.id %}Edit a{% else %}Add a{% endif %} course{% endblock %}
 
-
-{% addtoblock "js" %}<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.core.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.widget.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.mouse.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/ui/jquery.ui.sortable.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script type="text/javascript" src="{{ STATIC_URL }}jquery/plugins/jquery.cookie.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script type="text/javascript" src="{{ STATIC_URL }}jquery/plugins/jquery.ui.nestedSortable.js"></script>{% endaddtoblock %}
-
-
 {% block content %}
 	{% if error_message %}<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>{{ error_message }}</div>{% endif %}
 
@@ -25,11 +16,11 @@
 		{{ form.non_field.errors }}
 
 		<fieldset>
-			{% include "form_field.html" with field=form.subject %}
-			{% include "form_field.html" with field=form.instructional_year_level %}
-			{% include "form_field.html" with field=form.name %}
-			{% include "form_field.html" with field=form.short_name %}
-			{% include "wymeditor.html" with field=form.content %}
+			{% include "_form_field.html" with field=form.subject %}
+			{% include "_form_field.html" with field=form.instructional_year_level %}
+			{% include "_form_field.html" with field=form.name %}
+			{% include "_form_field.html" with field=form.short_name %}
+			{% include "_wymeditor.html" with field=form.content %}
 		</fieldset>
 
 		<div class="form-actions">

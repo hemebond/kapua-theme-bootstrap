@@ -33,13 +33,9 @@
 		{% endfor %}
 	</div>
 
-	<div class="span8">
+	<div class="span6">
 		<div class="page-header">	
-			<h1>{{ object }}
-				{% if perms.people.change_person %}
-					<a href="edit/" class="btn" style="float:right"><i class="icon-edit"></i> {% trans "Edit" %}</a>
-				{% endif %}
-			</h1>
+			<h1>{{ object }}</h1>
 		</div>
 
 		<!-- location -->
@@ -102,28 +98,19 @@
 			<dt>{% trans "Citizenship" %}</dt>
 			<dd>{{ object.citizenship }}</dd>
 		</dl>
+	</div>
 
+	<div class="span2">
+		<p>
+		{% if perms.people.change_person %}
+			<a href="edit/" class="btn"><i class="icon-edit"></i> {% trans "Edit" %}</a>
+		{% endif %}
+		</p>
 
-
-
+		<p>
+		{% if object.student %}
+			<a href="{{ object.student.get_absolute_url }}" class="btn"><i class="icon-user"></i> {% trans "Student Record" %}</a>
+		{% endif %}
+		</p>
 	</div>
 {% endblock %}
-
-
-
-{% comment %}
-	<div id="personal_details">
-
-
-
-
-
-	</div>
-	
-	{% if person.student %}
-		<hr style="clear:left">
-		{% with student=person.student %}
-			{% include "students/detail.html" %}
-		{% endwith %}
-	{% endif %}
-{% endcomment %}

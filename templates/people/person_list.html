@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load sekizai_tags %}
 
 {% block title %}{% trans "People" %}{% endblock %}
 
@@ -9,28 +10,52 @@
             <li><a href="{% url 'kapua_person_list' %}">{% trans "People" %}</a> <span class="divider">/</span></li>
         </ul>
 
-        <h1>
-        	{% trans "People" %}
-			{% if perms.people.add_course %}
-				<a href="./add/" class="btn" style="float:right"><i class="icon-plus-sign"></i> {% trans "Add person" %}</a>
-			{% endif %}
-		</h1>
+		<div class="page-header">
+			<h1>
+				{% trans "People" %}
+				{% if perms.people.add_course %}
+					<a href="./add/" class="btn" style="float:right"><i class="icon-plus-sign"></i> {% trans "Add person" %}</a>
+				{% endif %}
+			</h1>
+		</div>
 
-		<table class="table">
+		<table class="table table-bordered table-striped datatable">
 			<thead>
 				<tr>
-					<th>{% trans "First Names" %}</th>
-					<th>{% trans "Last Name" %}</th>
+					<th>{% trans "Name" %}</th>
+					<th>{% trans "Phone" %}</th>
+					<th>{% trans "Gender" %}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for person in object_list %}
 				<tr>
-					<td><a href="{{ person.get_absolute_url }}">{{ person.first_name }} {{ person.middle_names }}</a></td>
-					<td><a href="{{ person.get_absolute_url }}">{{ person.last_name }}</a></td>
+					<td><a href="{{ person.get_absolute_url }}">{{ person.first_name }} {{ person.middle_names }} {{ person.last_name }}</a></td>
+					<td>{{ person.phone }}</td>
+					<td>{{ person.get_gender_display }}</td>
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 	</div>
+
+{% include "_datatables.html" %}
+{% addtoblock "js_ready" %}
+	$('.datatable').dataTable(
+		$.extend(
+			{
+				"aoColumnDefs": [
+					{"bSearchable":false, "aTargets":["_all"]}
+				],
+				"aoColumns": [
+					{"bSearchable": true},
+					{"bSortable": false},
+					null
+				]
+			},
+			plugin_options.datatables
+		)
+	);
+{% endaddtoblock %}
+
 {% endblock %}

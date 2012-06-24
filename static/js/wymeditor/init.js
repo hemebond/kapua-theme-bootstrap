@@ -1,7 +1,7 @@
 jQuery(function() {
 	jQuery('.wymeditor').wymeditor({
-		basePath: "/static/wymeditor/",
-		skinPath: "/static/wymeditor-skin/",
+		basePath: "/static/libs/wymeditor/",
+		skinPath: "/static/css/wymeditor/",
 		skin: "bootstrap",
 		
 		//html: "<p>Type here</p>",
@@ -53,7 +53,6 @@ jQuery(function() {
 	        
 		containersItems: [
 			{'name': 'P', 'title': 'Paragraph', 'css': 'wym_containers_p'},
-			/*{'name': 'H1', 'title': 'Heading_1', 'css': 'wym_containers_h1'},*/
 			{'name': 'H2', 'title': 'Heading_2', 'css': 'wym_containers_h2'},
 			{'name': 'H3', 'title': 'Heading_3', 'css': 'wym_containers_h3'},
 			{'name': 'H4', 'title': 'Heading_4', 'css': 'wym_containers_h4'},

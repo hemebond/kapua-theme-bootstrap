@@ -30,7 +30,7 @@
 .wym_skin_bootstrap .wym_tools .btn			   	{ padding: 2px 6px 0}
 .wym_skin_bootstrap .wym_tools i          	   	{ width: 24px; height: 24px; overflow: hidden; display: inline-block; }
 /*image replacements*/
-.wym_skin_bootstrap .wym_tools i               	{ background: url("icons.png") no-repeat; text-indent: -9999px;} 
+.wym_skin_bootstrap .wym_tools i               	{ background: url(icons.png) no-repeat; text-indent: -9999px;}
 .wym_skin_bootstrap .wym_tools_strong i        	{ background-position: 0 -382px;}
 .wym_skin_bootstrap .wym_tools_emphasis i      	{ background-position: 0 -22px;}
 .wym_skin_bootstrap .wym_tools_superscript i   	{ background-position: 0 -430px;}
@@ -54,10 +54,10 @@
         .wym_dialog div.row input   { margin-right: 5px;}
         .wym_dialog div.row label   { float: left; width: 120px; display: block; text-align: right; margin-right: 10px; }
         .wym_dialog div.row-indent  { padding-left: 160px; }
-        /*autoclearing*/        
+        /*autoclearing*/
         .wym_dialog div.row:after            { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
         .wym_dialog div.row                  { display: inline-block; }
             /* Hides from IE-mac \*/
             * html .wym_dialog div.row       { height: 1%; }
             .wym_dialog div.row              { display: block; }
-            /* End hide from IE-mac */                
+            /* End hide from IE-mac */

@@ -10,7 +10,7 @@
 	
 	<h2>{% if object.id %}Edit a{% else %}Add a new{% endif %} person</h2>
 
-	<form action="" method="POST" class="form-horizontal">
+	<form enctype="multipart/form-data" action="" method="POST" class="form-horizontal">
 		{% csrf_token %}
 		{{ form.non_field.errors }}
 

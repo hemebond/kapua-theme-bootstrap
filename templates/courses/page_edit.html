@@ -31,14 +31,14 @@
 					{% trans "Adding a new page"%}
 				{% endif %}
 			</legend>
-			{% include "form_field.html" with field=form.name %}
-			{% include "wymeditor.html" with field=form.content %}
+			{% include "_form_field.html" with field=form.name %}
+			{% include "_wymeditor.html" with field=form.content %}
 		</fieldset>
 
 		<fieldset>
 			<legend>{% trans "Insert page" %}</legend>
-			{% include "form_field.html" with field=form.position %}
-			{% include "form_field.html" with field=form.target %}
+			{% include "_form_field.html" with field=form.position %}
+			{% include "_form_field.html" with field=form.target %}
 		</fieldset>
 
 		<div class="form-actions">
