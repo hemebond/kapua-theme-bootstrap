@@ -18,14 +18,14 @@
 		<fieldset>
 			<legend>{% trans "Personal Details" %}</legend>
 			{% for field in person_form %}
-				{% include "form_field.html" %}
+				{% include "_form_field.html" %}
 			{% endfor %}
 		</fieldset>
 
 		<fieldset>
 			<legend>{% trans "Student Details" %}</legend>
 			{% for field in student_form %}
-				{% include "form_field.html" %}
+				{% include "_form_field.html" %}
 			{% endfor %}
 		</fieldset>
 

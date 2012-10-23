@@ -4,33 +4,36 @@
 {% block title %}{% trans "courses" %}{% endblock %}
 
 {% block content %}
-	<div class="span12">
-        <ul class="breadcrumb">
-            <li><a href="{% url 'kapua_course_list' %}">{% trans "Courses" %}</a> <span class="divider">/</span></li>
-        </ul>
-
-        <h1>
-        	{% trans "Courses" %}
+	<div class="row-fluid">
+		<div class="span10">
+			<h1>
+				{% trans "Courses" %}
+			</h1>
+		</div>
+		<div class="span2">
 			{% if perms.courses.add_course %}
-				<a href="./add/" class="btn" style="float:right"><i class="icon-plus-sign"></i> {% trans "Add course" %}</a>
+				<a href="./add/" class="btn btn-block">
+					<i class="icon-plus-sign"></i>
+					{% trans "Add course" %}
+				</a>
 			{% endif %}
-		</h1>
-
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Subject</th>
-					<th>Name</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for course in object_list %}
-				<tr>
-					<td>{{ course.subject }}</td>
-					<td><a href="{{ course.get_absolute_url }}">{{ course.name }}</a></td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+		</div>
 	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{% trans "Subject" %}</th>
+				<th>{% trans "Name" %}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for course in object_list %}
+			<tr>
+				<td>{{ course.subject }}</td>
+				<td><a href="{{ course.get_absolute_url }}">{{ course.name }}</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

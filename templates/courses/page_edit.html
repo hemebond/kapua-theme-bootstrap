@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load attachments_tags %}
 {% load i18n %}
+{% load attachments_tags %}
 {% load theme_tags %}
 
 
@@ -12,12 +12,13 @@
 	{% endif %}
 {% endblock %}
 
-
-{% block head_extras %}{% endblock %}
-
-
 {% block content %}
-	{% if error_message %}<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>{{ error_message }}</div>{% endif %}
+	{% if error_message %}
+		<div class="alert alert-error">
+			<a class="close" data-dismiss="alert">×</a>
+			{{ error_message }}
+		</div>
+	{% endif %}
 
 	<form action="." method="POST" class="form-horizontal">
 		{% csrf_token %}
@@ -35,11 +36,13 @@
 			{% include "_wymeditor.html" with field=form.content %}
 		</fieldset>
 
-		<fieldset>
-			<legend>{% trans "Insert page" %}</legend>
-			{% include "_form_field.html" with field=form.position %}
-			{% include "_form_field.html" with field=form.target %}
-		</fieldset>
+		{% if form.target %}
+			<fieldset>
+				<legend>{% trans "Insert page" %}</legend>
+				{% include "_form_field.html" with field=form.position %}
+				{% include "_form_field.html" with field=form.target %}
+			</fieldset>
+		{% endif %}
 
 		<div class="form-actions">
 			<input type="submit" value="{% trans 'Save' %}" name="_save" class="submit default wymupdate btn btn-primary">

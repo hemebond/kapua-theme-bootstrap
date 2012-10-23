@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load mptt_tags %}
+{% load i18n %}
+{% load theme_tags %}
+
+{% block head_extras %}
+		{% if pages %}
+			{% if previous_page %}
+				<link rel="prev" href="{{ previous_page.get_absolute_url }}">
+			{% endif %}
+
+			{% if next_page %}
+				<link rel="next" href="{{ next_page.get_absolute_url }}">
+			{% endif %}
+		{% endif %}
+
+		<style>
+			ol.table_of_contents,
+			ol.table_of_contents ol { counter-reset: item }
+			ol.table_of_contents li { display: block }
+			ol.table_of_contents li:before {
+				content: counters(item, ".") ".";
+				counter-increment: item;
+			}
+		</style>
+{% endblock %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="span3">
+			{% if perms.courses.change_course %}
+				<a href="edit/" class="btn btn-block">
+					<i class="icon-edit"></i>
+					{% trans "Edit Course" %}
+				</a>
+			{% endif %}
+
+			{% if page %}
+				{% if perms.courses.change_page %}
+					<a href="{% url 'kapua_page_edit' page.pk %}" class="btn btn-block">
+						<i class="icon-edit"></i>
+						{% trans "Edit Page" %}
+					</a>
+				{% endif %}
+			{% endif %}
+
+			{% if perms.courses.add_page %}
+				<a href="{% url 'kapua_page_add' course.pk %}" class="btn btn-block">
+					<i class="icon-plus-sign"></i>
+					{% trans "Add Page" %}
+				 </a>
+			{% endif %}
+
+			{% if pages %}
+				<h6>{% trans "Contents" %}</h6>
+				<ol class="table_of_contents">
+					{% recursetree pages %}
+					<li>
+						<a href="{{ node.get_absolute_url }}">
+							{{ node.name }}
+						</a>
+						{% if not node.is_leaf_node %}
+							<ol>
+								{{ children }}
+							</ol>
+						{% endif %}
+					</li>
+					{% endrecursetree %}
+				</ol>
+				
+				{% if previous_page %}
+					<h6>Previous</h6>
+					<p>
+						<a href="{{ previous_page.get_absolute_url }}">
+							{{ previous_page.name }}
+						</a>
+					</p>
+				{% endif %}
+
+				{% if next_page %}
+					<h6>Next</h6>
+					<p>
+						<a href="{{ next_page.get_absolute_url }}">
+							{{ next_page.name }}
+						</a>
+					</p>
+				{% endif %}
+			{% endif %}
+		</div>
+
+		<div class="span9">
+			{% block page_content %}{% endblock %}
+		</div>
+	</div>
+{% endblock %}

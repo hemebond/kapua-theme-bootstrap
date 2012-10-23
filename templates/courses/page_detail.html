@@ -1,39 +1,34 @@
-{% extends "base.html" %}
+{% extends "courses/detail.html" %}
 {% load mptt_tags %}
 {% load i18n %}
 {% load theme_tags %}
 
-{% block title %}{{ object.title }}{% endblock %}
+{% block title %}{{ page.title }}{% endblock %}
 
-{% block content %}
-    <div class="span10">
-        <ul class="breadcrumb">
-            <li><a href="{% url 'kapua_course_list' %}">{% trans "Courses" %}</a> <span class="divider">/</span></li>
-            {% for node in treenode.get_ancestors %}
-            <li><a href="{{ node.content_object.get_absolute_url }}">{{ node.content_object.name }}</a> <span class="divider">/</span></li>
-            {% endfor %}
-            <li class="active">{{ object.name }}</li>
-        </ul>
-        
-        <h1>{{ object.name }}
-            {% if perms.courses.change_page %}
-                <a href="./edit/" class="btn" style="float:right"><i class="icon-edit"></i> {% trans "Edit Page" %}</a>
-            {% endif %}
-        </h1>
-    
-        {{ object.content|clean|safe }}
-    </div>
-
-    <div class="span2">
-
-    	{% if prev %}
-    		<h6>Previous</h6>
-    		<p><a href="{{ prev.content_object.get_absolute_url }}">{{ prev.content_object.name }}</a></p>
-    	{% endif %}
-    	
-    	{% if next %}
-    		<h6>Next</h6>
-    		<p><a href="{{ next.content_object.get_absolute_url }}">{{ next.content_object.name }}</a></p>
-    	{% endif %}
-    </div>
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li>
+			<a href="{% url 'kapua_course_list' %}">{% trans "Courses" %}</a>
+			<span class="divider">/</span>
+		</li>
+		<li>
+			<a href="{% url 'kapua_course_detail' page.course_id %}">{{ page.course.name }}</a>
+			<span class="divider">/</span>
+		</li>
+		{% for node in breadcrumbs %}
+			<li>
+				<a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
+				<span class="divider">/</span>
+			</li>
+		{% endfor %}
+		<li class="active">{{ page.name }}</li>
+	</ul>
 {% endblock %}
+
+{% block page_content %}
+	<h1>{{ course.name }}</h1>
+
+	<h2>{{ page.name }}</h2>
+
+	{{ page.content|clean|safe }}
+{% endblock page_content %}

@@ -5,26 +5,51 @@
 {% load theme_tags %}
 
 
-{% block title %}{% if course.id %}Edit a{% else %}Add a{% endif %} course{% endblock %}
+{% block title %}
+	{% if object.id %}
+		Editing {{ object.name }}
+	{% else %}
+		{% trans "Add a new course" %}
+	{% endif %}
+{% endblock %}
 
 {% block content %}
-	{% if error_message %}<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>{{ error_message }}</div>{% endif %}
+	{% if form.non_field.errors %}
+		<div class="alert alert-error">
+			<a class="close" data-dismiss="alert">×</a>
+			{{ form.non_field.errors }}
+		</div>
+	{% endif %}
 
-	<form action="." method="POST" class="form-horizontal">
-		<legend>{% if course.id %}Edit a{% else %}Add a{% endif %} course</legend>
+	<form action="" method="POST" class="form-horizontal">
+		<legend>
+			{% if object.id %}
+				{% blocktrans with object.name as name %}
+					Editing {{ name }}
+				{% endblocktrans %}
+			{% else %}
+				{% trans "Adding a new course" %}
+			{% endif %}
+		</legend>
+
 		{% csrf_token %}
+
 		{{ form.non_field.errors }}
 
 		<fieldset>
 			{% include "_form_field.html" with field=form.subject %}
 			{% include "_form_field.html" with field=form.instructional_year_level %}
 			{% include "_form_field.html" with field=form.name %}
-			{% include "_form_field.html" with field=form.short_name %}
 			{% include "_wymeditor.html" with field=form.content %}
 		</fieldset>
 
 		<div class="form-actions">
-			<input type="submit" value="{% trans 'Save' %}" name="_save" class="submit default wymupdate btn btn-primary">
+			<input
+				type="submit"
+				value="{% trans 'Save' %}"
+				name="_save"
+				class="submit default wymupdate btn btn-primary"
+			>
 		</div>
 	</form>
 {% endblock %}

@@ -7,7 +7,7 @@
 
 {% block content %}
 	{% if error_message %}<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>{{ error_message }}</div>{% endif %}
-	
+
 	<h2>{% if object.id %}Edit a{% else %}Add a new{% endif %} person</h2>
 
 	<form enctype="multipart/form-data" action="" method="POST" class="form-horizontal">
@@ -17,7 +17,16 @@
 		<fieldset>
 			<legend>{% trans "Personal Details" %}</legend>
 			{% for field in form %}
-				{% include "form_field.html" %}
+				{% include "_form_field.html" %}
+			{% endfor %}
+		</fieldset>
+
+		<fieldset>
+			<legend>{% trans "Residence" %}</legend>
+			{% for form in location_formset %}
+				{% for field in form %}
+					{% include "_form_field.html" %}
+				{% endfor %}
 			{% endfor %}
 		</fieldset>
 
@@ -27,7 +36,7 @@
 			{% for form in relationship_formset %}
 				<fieldset>
 					{% for field in form %}
-						{% include "form_field.html" %}
+						{% include "_form_field.html" %}
 					{% endfor %}
 				</fieldset>
 			{% endfor %}
