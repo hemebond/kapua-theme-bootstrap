@@ -104,10 +104,17 @@
 			<div id="calendar" class="span12"></div>
 {% include "_calendar.html" %}
 {% addtoblock "js_ready" %}
-	var date = new Date();
-	var d = date.getDate();
-	var m = date.getMonth();
-	var y = date.getFullYear();
+	today = new Date();
+
+	monday = new Date(
+		today.setDate(
+			today.getDate() - (today.getDay() - 1)
+		)
+	);
+
+	var d = monday.getDate();
+	var m = monday.getMonth();
+	var y = monday.getFullYear();
 
 	var options = plugin_options.calendar;
 
@@ -119,8 +126,55 @@
 				theme: true,
 				events: [
 					{
+						id: 1,
+						title: "Admin/Roll/Notices",
+						start: new Date(y, m, d, 8, 55),
+						end: new Date(y, m, d, 9),
+						allDay: false
+					},
+					{
+						title: "Reading - The Lorax",
+						start: new Date(y, m, d, 9),
+						end: new Date(y, m, d, 10, 10),
+						allDay: false
+					},
+					{
+						id: 999,
+						title: "Fitness / Snack Break",
+						start: new Date(y, m, d, 10, 10),
+						end: new Date(y, m, d, 10, 25),
+						allDay: false
+					},
+					{
+						title: "Maths - Multiplication",
+						start: new Date(y, m, d, 10, 25),
+						end: new Date(y, m, d, 11, 25),
+						allDay: false
+					},
+					{
+						title: "Lunch Break",
+						start: new Date(y, m, d, 11, 25),
+						end: new Date(y, m, d, 11, 50),
+						allDay: false
+					},
+					{
+						title: "Spelling",
+						start: new Date(y, m, d, 11, 50),
+						//end: new Date(y, m, d, 11, 50),
+						allDay: false
+					},
+					{
+						id: 999,
+						title: "Fitness / Snack Break",
+						start: new Date(y, m, d+1, 10, 10),
+						end: new Date(y, m, d+1, 10, 25),
+						allDay: false
+					},
+
+				/*
+					{
 						title: 'All Day Event',
-						start: new Date(y, m, 1)
+						start: new Date(y, m, d)
 					},
 					{
 						title: 'Long Event',
@@ -162,6 +216,7 @@
 						end: new Date(y, m, 29),
 						url: 'http://google.com/'
 					}
+				*/
 				]
 			}
 		)

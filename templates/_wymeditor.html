@@ -1,12 +1,11 @@
 {% load sekizai_tags %}
 
-{% addtoblock "css" %}<link href="{{ STATIC_URL }}libs/jquery-ui-1.8.21/themes/base/jquery.ui.resizable.css" rel="stylesheet" type="text/css">{% endaddtoblock %}
+{# {% addtoblock "css" %}<link href="{{ STATIC_URL }}libs/jquery-ui-1.8.21/development-bundle/themes/base/jquery.ui.resizable.css" rel="stylesheet" type="text/css">{% endaddtoblock %} #}
 
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}libs/jquery-ui-1.8.21/js/jquery-1.7.2.min.js" type="text/javascript"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}libs/jquery-ui-1.8.21/js/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}libs/wymeditor/jquery.wymeditor.js" type="text/javascript"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}libs/wymeditor/plugins/hovertools/jquery.wymeditor.hovertools.js" type="text/javascript"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{{ STATIC_URL }}libs/wymeditor/plugins/resizable/jquery.wymeditor.resizable.js" type="text/javascript"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script src="{{ STATIC_URL }}js/wymeditor/init.js" type="text/javascript"></script>{% endaddtoblock %}
 
 {% include "_form_field.html" with field=field field_class="wymeditor" %}

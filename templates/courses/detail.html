@@ -6,11 +6,11 @@
 {% block head_extras %}
 		{% if pages %}
 			{% if previous_page %}
-				<link rel="prev" href="{{ previous_page.get_absolute_url }}">
+				<link rel="prev" href="{% url 'kapua-page-detail' previous_page.pk %}">
 			{% endif %}
 
 			{% if next_page %}
-				<link rel="next" href="{{ next_page.get_absolute_url }}">
+				<link rel="next" href="{% url 'kapua-page-detail' next_page.pk %}">
 			{% endif %}
 		{% endif %}
 
@@ -29,7 +29,7 @@
 	<div class="row-fluid">
 		<div class="span3">
 			{% if perms.courses.change_course %}
-				<a href="edit/" class="btn btn-block">
+				<a href="{% url 'kapua-course-edit' course.pk %}" class="btn btn-block">
 					<i class="icon-edit"></i>
 					{% trans "Edit Course" %}
 				</a>
@@ -37,7 +37,7 @@
 
 			{% if page %}
 				{% if perms.courses.change_page %}
-					<a href="{% url 'kapua_page_edit' page.pk %}" class="btn btn-block">
+					<a href="{% url 'kapua-page-edit' page.pk %}" class="btn btn-block">
 						<i class="icon-edit"></i>
 						{% trans "Edit Page" %}
 					</a>
@@ -45,7 +45,7 @@
 			{% endif %}
 
 			{% if perms.courses.add_page %}
-				<a href="{% url 'kapua_page_add' course.pk %}" class="btn btn-block">
+				<a href="{% url 'kapua-page-add' course.pk %}" class="btn btn-block">
 					<i class="icon-plus-sign"></i>
 					{% trans "Add Page" %}
 				 </a>
@@ -54,9 +54,17 @@
 			{% if pages %}
 				<h6>{% trans "Contents" %}</h6>
 				<ol class="table_of_contents">
+					<li>
+						{% with root=course.pages.all.0 %}
+							<a href="{% url 'kapua-page-detail' root.pk %}">
+								{{ root }}
+							</a>
+						{% endwith %}
+					</li>
+
 					{% recursetree pages %}
 					<li>
-						<a href="{{ node.get_absolute_url }}">
+						<a href="{% url 'kapua-page-detail' node.pk %}">
 							{{ node.name }}
 						</a>
 						{% if not node.is_leaf_node %}
@@ -71,7 +79,7 @@
 				{% if previous_page %}
 					<h6>Previous</h6>
 					<p>
-						<a href="{{ previous_page.get_absolute_url }}">
+						<a href="{% url 'kapua-page-detail' previous_page.pk %}">
 							{{ previous_page.name }}
 						</a>
 					</p>
@@ -80,7 +88,7 @@
 				{% if next_page %}
 					<h6>Next</h6>
 					<p>
-						<a href="{{ next_page.get_absolute_url }}">
+						<a href="{% url 'kapua-page-detail' next_page.pk %}">
 							{{ next_page.name }}
 						</a>
 					</p>

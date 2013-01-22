@@ -8,16 +8,16 @@
 {% block breadcrumbs %}
 	<ul class="breadcrumb">
 		<li>
-			<a href="{% url 'kapua_course_list' %}">{% trans "Courses" %}</a>
+			<a href="{% url 'kapua-course-list' %}">{% trans "Courses" %}</a>
 			<span class="divider">/</span>
 		</li>
 		<li>
-			<a href="{% url 'kapua_course_detail' page.course_id %}">{{ page.course.name }}</a>
+			<a href="{% url 'kapua-course-detail' page.course_id %}">{{ page.course.name }}</a>
 			<span class="divider">/</span>
 		</li>
 		{% for node in breadcrumbs %}
 			<li>
-				<a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
+				<a href="{% url 'kapua-page-detail' node.pk %}">{{ node.name }}</a>
 				<span class="divider">/</span>
 			</li>
 		{% endfor %}
